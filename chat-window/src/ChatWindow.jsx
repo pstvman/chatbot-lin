@@ -83,6 +83,7 @@ function ChatWindow() {
                     onChange={(e) => setInput(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                     disabled={isLoading}
+                    placeholder="输入消息..."
                 />
                 <button onClick={handleSend} disabled={isLoading}>发送</button>
             </div>
