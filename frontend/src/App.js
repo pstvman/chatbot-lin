@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 // import './App.css';
 import React from 'react';
-import ChatWindow from './ChatWindow';
+import ChatWindow from './components/ChatUI';
 
 function App() {
   return (

@@ -1,6 +1,5 @@
-.idea/*
+.idea/
 *.pyc
-*checkpoint*
-venv/*
-test/*
-vue/*
+venv/
+test/
+

@@ -22,7 +22,7 @@ def init_chat_history():
     ]
 
 # 默认使用 gpt-4o-mini 模型
-async def get_completion(messages, response_format="text", model="gpt-4o-mini"):
+async def get_completion(messages, response_format="text", model="gpt-4o"):
     response = await client.chat.completions.create(
         model=model,
         messages=messages,
@@ -61,4 +61,4 @@ async def chat():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=41221)

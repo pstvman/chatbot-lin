@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './ChatWindow.css';
+import '../styles/ChatUI.css';
+import config from '../config';
 
 // 创建组件函数
 function ChatWindow() {
@@ -14,7 +15,7 @@ function ChatWindow() {
 
     const fetchInitialMessages = async () => {
         try {
-            const response = await fetch('http://localhost:5000/chat', {
+            const response = await fetch(config.API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -40,26 +41,28 @@ function ChatWindow() {
     const handleSend = async () => {
         if (input.trim()) {
             setIsLoading(true);
-            setMessages(prev => [...prev, { text: input, sender: 'user' }]);
+            const userMessage = input.trim();
+            // 保存当前输入的消息
+            setMessages(prevMessages => [...prevMessages, { text: userMessage, sender: 'user' }]);
             setInput('');
 
             try {
-                const response = await fetch('http://localhost:5000/chat', {
+                const response = await fetch(config.API_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ message: input }),
+                    body: JSON.stringify({ message: userMessage }),
                 });
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                console.log('Bot response:', data);
-                setMessages(prev => [...prev, { text: data.response, sender: 'bot' }]);
+                // 追加机器人的回复，而不是重置消息列表
+                setMessages(prevMessages => [...prevMessages, { text: data.response, sender: 'bot' }]);
             } catch (error) {
                 console.error('Error sending message:', error);
-                setMessages(prev => [...prev, { text: '对不起，我遇到了一些问题。', sender: 'bot' }]);
+                setMessages(prevMessages => [...prevMessages, { text: '对不起，我遇到了一些问题。', sender: 'bot' }]);
             } finally {
                 setIsLoading(false);
             }
